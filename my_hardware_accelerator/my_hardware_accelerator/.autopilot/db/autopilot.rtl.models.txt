@@ -1,0 +1,2 @@
+regslice_core
+hardware_accelerator

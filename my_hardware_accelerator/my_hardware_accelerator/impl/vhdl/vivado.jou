@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Thu Nov  5 10:38:36 2020
+# Process ID: 5440
+# Current directory: C:/Users/kevin/OneDrive/Documents/ING5_HW_SW_CoDesign/Lab3/my_hardware_accelerator/my_hardware_accelerator/impl/vhdl
+# Command line: vivado.exe -notrace -mode batch -source run_vivado.tcl
+# Log file: C:/Users/kevin/OneDrive/Documents/ING5_HW_SW_CoDesign/Lab3/my_hardware_accelerator/my_hardware_accelerator/impl/vhdl/vivado.log
+# Journal file: C:/Users/kevin/OneDrive/Documents/ING5_HW_SW_CoDesign/Lab3/my_hardware_accelerator/my_hardware_accelerator/impl/vhdl\vivado.jou
+#-----------------------------------------------------------
+source run_vivado.tcl -notrace

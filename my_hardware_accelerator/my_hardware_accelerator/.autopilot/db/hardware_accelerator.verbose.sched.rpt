@@ -1,0 +1,149 @@
+
+
+================================================================
+== Vivado HLS Report for 'hardware_accelerator'
+================================================================
+* Date:           Thu Nov  5 10:35:42 2020
+
+* Version:        2020.1 (Build 2897737 on Wed May 27 20:21:37 MDT 2020)
+* Project:        my_hardware_accelerator
+* Solution:       my_hardware_accelerator
+* Product family: zynq
+* Target device:  xc7z020-clg484-1
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+----------+----------+------------+
+    |  Clock |  Target  | Estimated| Uncertainty|
+    +--------+----------+----------+------------+
+    |ap_clk  | 10.00 ns | 2.552 ns |   1.25 ns  |
+    +--------+----------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+-----+---------+
+    |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline|
+    |   min   |   max   |    min   |    max   | min | max |   Type  |
+    +---------+---------+----------+----------+-----+-----+---------+
+    |       21|       21| 0.210 us | 0.210 us |   21|   21|   none  |
+    +---------+---------+----------+----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        +----------+---------+---------+----------+-----------+-----------+------+----------+
+        |          |  Latency (cycles) | Iteration|  Initiation Interval  | Trip |          |
+        | Loop Name|   min   |   max   |  Latency |  achieved |   target  | Count| Pipelined|
+        +----------+---------+---------+----------+-----------+-----------+------+----------+
+        |- Loop 1  |       20|       20|         2|          -|          -|    10|    no    |
+        +----------+---------+---------+----------+-----------+-----------+------+----------+
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 1
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 0
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 3
+* Pipeline : 0
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 3 
+3 --> 2 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 1.76>
+ST_1 : Operation 4 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecBitsMap(i32* %IN_data_V), !map !40"   --->   Operation 4 'specbitsmap' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 5 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecBitsMap(i4* %IN_keep_V), !map !46"   --->   Operation 5 'specbitsmap' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 6 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecBitsMap(i1* %IN_last_V), !map !50"   --->   Operation 6 'specbitsmap' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 7 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecBitsMap(i32* %OUT_data_V), !map !54"   --->   Operation 7 'specbitsmap' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 8 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecBitsMap(i4* %OUT_keep_V), !map !58"   --->   Operation 8 'specbitsmap' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 9 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecBitsMap(i1* %OUT_last_V), !map !62"   --->   Operation 9 'specbitsmap' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 10 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecTopModule([21 x i8]* @hardware_accelerator_1) nounwind"   --->   Operation 10 'spectopmodule' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 11 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecInterface(i32* %IN_data_V, i4* %IN_keep_V, i1* %IN_last_V, [5 x i8]* @p_str, i32 1, i32 1, [5 x i8]* @p_str1, i32 0, i32 0, [1 x i8]* @p_str2, [1 x i8]* @p_str2, [1 x i8]* @p_str2, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @p_str2, [1 x i8]* @p_str2)" [my_hardware_accelerator/my_code.cpp:19]   --->   Operation 11 'specinterface' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 12 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecInterface(i32* %OUT_data_V, i4* %OUT_keep_V, i1* %OUT_last_V, [5 x i8]* @p_str, i32 1, i32 1, [5 x i8]* @p_str1, i32 0, i32 0, [1 x i8]* @p_str2, [1 x i8]* @p_str2, [1 x i8]* @p_str2, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @p_str2, [1 x i8]* @p_str2)" [my_hardware_accelerator/my_code.cpp:20]   --->   Operation 12 'specinterface' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 13 [1/1] (1.76ns)   --->   "br label %1" [my_hardware_accelerator/my_code.cpp:22]   --->   Operation 13 'br' <Predicate = true> <Delay = 1.76>
+
+State 2 <SV = 1> <Delay = 2.55>
+ST_2 : Operation 14 [1/1] (0.00ns)   --->   "%i_0 = phi i4 [ 0, %0 ], [ %i, %2 ]"   --->   Operation 14 'phi' 'i_0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 15 [1/1] (1.30ns)   --->   "%icmp_ln22 = icmp eq i4 %i_0, -6" [my_hardware_accelerator/my_code.cpp:22]   --->   Operation 15 'icmp' 'icmp_ln22' <Predicate = true> <Delay = 1.30> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 1.30> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 16 [1/1] (0.00ns)   --->   "%empty = call i32 (...)* @_ssdm_op_SpecLoopTripCount(i64 10, i64 10, i64 10)"   --->   Operation 16 'speclooptripcount' 'empty' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 17 [1/1] (1.73ns)   --->   "%i = add i4 %i_0, 1" [my_hardware_accelerator/my_code.cpp:22]   --->   Operation 17 'add' 'i' <Predicate = true> <Delay = 1.73> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 2.55> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 18 [1/1] (0.00ns)   --->   "br i1 %icmp_ln22, label %3, label %2" [my_hardware_accelerator/my_code.cpp:22]   --->   Operation 18 'br' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 19 [1/1] (0.00ns)   --->   "%empty_2 = call { i32, i4, i1 } @_ssdm_op_Read.axis.volatile.i32P.i4P.i1P(i32* %IN_data_V, i4* %IN_keep_V, i1* %IN_last_V)" [my_hardware_accelerator/my_code.cpp:16]   --->   Operation 19 'read' 'empty_2' <Predicate = (!icmp_ln22)> <Delay = 0.00> <Core = "AXI4Stream">   --->   Core 5 'AXI4Stream' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : >
+ST_2 : Operation 20 [1/1] (0.00ns) (grouped into LUT with out node add_ln68)   --->   "%IN_data_V_tmp = extractvalue { i32, i4, i1 } %empty_2, 0" [my_hardware_accelerator/my_code.cpp:16]   --->   Operation 20 'extractvalue' 'IN_data_V_tmp' <Predicate = (!icmp_ln22)> <Delay = 0.00>
+ST_2 : Operation 21 [1/1] (0.00ns)   --->   "%IN_keep_V_tmp = extractvalue { i32, i4, i1 } %empty_2, 1" [my_hardware_accelerator/my_code.cpp:16]   --->   Operation 21 'extractvalue' 'IN_keep_V_tmp' <Predicate = (!icmp_ln22)> <Delay = 0.00>
+ST_2 : Operation 22 [1/1] (0.00ns)   --->   "%IN_last_V_tmp = extractvalue { i32, i4, i1 } %empty_2, 2" [my_hardware_accelerator/my_code.cpp:16]   --->   Operation 22 'extractvalue' 'IN_last_V_tmp' <Predicate = (!icmp_ln22)> <Delay = 0.00>
+ST_2 : Operation 23 [1/1] (2.55ns) (out node of the LUT)   --->   "%add_ln68 = add i32 %IN_data_V_tmp, 255" [my_hardware_accelerator/my_code.cpp:25]   --->   Operation 23 'add' 'add_ln68' <Predicate = (!icmp_ln22)> <Delay = 2.55> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 2.55> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 24 [2/2] (0.00ns)   --->   "call void @_ssdm_op_Write.axis.volatile.i32P.i4P.i1P(i32* %OUT_data_V, i4* %OUT_keep_V, i1* %OUT_last_V, i32 %add_ln68, i4 %IN_keep_V_tmp, i1 %IN_last_V_tmp)" [my_hardware_accelerator/my_code.cpp:16]   --->   Operation 24 'write' <Predicate = (!icmp_ln22)> <Delay = 0.00> <Core = "AXI4Stream">   --->   Core 5 'AXI4Stream' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : >
+ST_2 : Operation 25 [1/1] (0.00ns)   --->   "ret void" [my_hardware_accelerator/my_code.cpp:31]   --->   Operation 25 'ret' <Predicate = (icmp_ln22)> <Delay = 0.00>
+
+State 3 <SV = 2> <Delay = 0.00>
+ST_3 : Operation 26 [1/2] (0.00ns)   --->   "call void @_ssdm_op_Write.axis.volatile.i32P.i4P.i1P(i32* %OUT_data_V, i4* %OUT_keep_V, i1* %OUT_last_V, i32 %add_ln68, i4 %IN_keep_V_tmp, i1 %IN_last_V_tmp)" [my_hardware_accelerator/my_code.cpp:16]   --->   Operation 26 'write' <Predicate = true> <Delay = 0.00> <Core = "AXI4Stream">   --->   Core 5 'AXI4Stream' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : >
+ST_3 : Operation 27 [1/1] (0.00ns)   --->   "br label %1" [my_hardware_accelerator/my_code.cpp:22]   --->   Operation 27 'br' <Predicate = true> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 10ns, clock uncertainty: 1.25ns.
+
+ <State 1>: 1.77ns
+The critical path consists of the following:
+	multiplexor before 'phi' operation ('i') with incoming values : ('i', my_hardware_accelerator/my_code.cpp:22) [18]  (1.77 ns)
+
+ <State 2>: 2.55ns
+The critical path consists of the following:
+	axis read on port 'IN_data_V' (my_hardware_accelerator/my_code.cpp:16) [24]  (0 ns)
+	'add' operation ('add_ln68', my_hardware_accelerator/my_code.cpp:25) [28]  (2.55 ns)
+
+ <State 3>: 0ns
+The critical path consists of the following:
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A
