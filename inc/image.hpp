@@ -8,12 +8,6 @@
 #include <fstream>
 #include <iostream>
 
-#define STB_IMAGE_IMPLEMENTATION
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image/stb_image.h"
-#include "stb_image/stb_image_resize.h"
-#include "stb_image/stb_image_write.h"
-
 
 /** 
  * @brief Image ; this class holds an image data 
@@ -32,6 +26,8 @@ using namespace std;
     unsigned char *img;
 
 
+    int gray_width;
+    int gray_height;
     int gray_channels;
     size_t gray_img_size;
     unsigned char *gray_img; //Output image in gray 
@@ -60,6 +56,19 @@ using namespace std;
     void setWidth(int width);
     void setHeight(int height);
     void setFileName(char *fname);
+
+    void printImgMatrix();
+    void printImgWidth();
+    void printImgHeight();
+    void printImgSize();
+    void printImgGray();
+    void saveGrayImg();
+
+    void printGrayImgWidth();
+
+    void printGrayImgHeight();
+
+    void printGrayImgSize();
 
 };
 

@@ -4,11 +4,11 @@
 #include <assert.h>
 #include <stdint.h>
 #include <ctype.h>
+#include <iostream>
 #include "dma.hpp"
 #include "image.hpp"
 
-
-
+using namespace std;
 int main(){
 
     //Init the DMA
@@ -20,12 +20,23 @@ int main(){
     unsigned char threshold = '0';
 
     //Stop the DMA (it starts running once on power)
-    dma->reset();
-    dma->halt();
-    
+    //dma->reset();
+    //dma->halt();
     Image img("airplane.jpg");
+    //img.printImgMatrix();
+    img.printImgHeight();
+    img.printImgWidth();
+    img.printImgSize();
+    //img.printImgMatrix();
+
+    img.printGrayImgHeight();
+    img.printGrayImgWidth();
+    img.printGrayImgSize();
 
     img.computeGrayScale();
+    //img.printImgGray();
+
+    img.saveGrayImg();
 
 
     return 0;
