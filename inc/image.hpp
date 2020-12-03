@@ -25,9 +25,6 @@ using namespace std;
     char *fname;           //Image file name
     unsigned char *img;
 
-
-    int gray_width;
-    int gray_height;
     int gray_channels;
     size_t gray_img_size;
     unsigned char *gray_img; //Output image in gray 
@@ -63,10 +60,6 @@ using namespace std;
     void printImgSize();
     void printImgGray();
     void saveGrayImg();
-
-    void printGrayImgWidth();
-
-    void printGrayImgHeight();
 
     void printGrayImgSize();
 

@@ -12,7 +12,7 @@ typedef struct ap_axi{
 
 }ap_axi;
 
-//Accelerator reads 10 int (32 bits each) and return 10 int
+//Accelerator computes the grayscale of RGB input image
 void hardware_accelerator(ap_axi IN[10], ap_axi OUT[10]){
     //Define RTL interface
     //Define AXI-stream bus

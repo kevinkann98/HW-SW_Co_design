@@ -23,17 +23,22 @@ int main(){
     //dma->reset();
     //dma->halt();
     Image img("airplane.jpg");
-    //img.printImgMatrix();
+
+    //Write the matrix of input image (char *) in the memory at source address from which
+    //DMA will read
+    //unsigned char *inputImg = img.getImg();
+
+    //for(int i=0;i<sizeof(inputImg);i++){
+        //dma->writeSourceByte(inputImg[i]);
+   // }
+
     img.printImgHeight();
     img.printImgWidth();
     img.printImgSize();
     //img.printImgMatrix();
 
-    img.printGrayImgHeight();
-    img.printGrayImgWidth();
-    img.printGrayImgSize();
-
     img.computeGrayScale();
+    img.printGrayImgSize();
     //img.printImgGray();
 
     img.saveGrayImg();

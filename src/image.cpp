@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <string>
 #include <cstring>
+#include <time.h>
 #include "image.hpp"
 #define STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -91,9 +92,9 @@ void Image::printImgSize()
 void Image::printImgGray()
 {
     int k = 0;
-    for (int i = 0; i < this->gray_height; i++)
+    for (int i = 0; i < this->height; i++)
     {
-        for (int j = 0; j < this->gray_width; j++)
+        for (int j = 0; j < this->width; j++)
         {
             cout << "y=" << i << ", x=" << j << ", image_value= " << (void *)this->gray_img[k] << "\n";
             k++;
@@ -101,13 +102,6 @@ void Image::printImgGray()
     }
 }
 
-void Image::printGrayImgWidth(){
-     cout << "Gray image width is: " << this->gray_width << "\n";
-}
-
-void Image::printGrayImgHeight(){
-     cout << "Gray image height is: " << this->gray_height << "\n";
-}
 
 void Image::printGrayImgSize(){
      cout << "Gray image size is: " << this->gray_img_size << "\n";
