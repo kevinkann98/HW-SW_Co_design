@@ -34,9 +34,7 @@ Image::Image(char *fname)
     this->img_size = this->width * this->height * this->channels;
 
     this->gray_channels = 1;
-    this->gray_width = this->width/3;
-    this->gray_height = this->height/3;
-    this->gray_img_size = this->gray_width * this->gray_height * this->gray_channels;
+    this->gray_img_size = this->width * this->height * this->gray_channels;
 
     this->gray_img = (unsigned char *)malloc(gray_img_size*sizeof(unsigned char)); //Output image matrix
 }
@@ -46,15 +44,15 @@ void Image::computeGrayScale()
 {
     int k = 0;
     int j = 0;
-    for (int y = 0; y < this->gray_height; y++)
+
+    for (int y = 0; y < this->height; y++)
     {
-        for (int x = 0; x < this->gray_width; x++)
+        for (int x = 0; x < this->width; x++)
         {
             this->gray_img[k] = (this->img[j] + this->img[j + 1] + this->img[j + 2]) / 3.0; //Calculate average of RGB
             k++;
             j+=3;
         }
-        
     }
 }
 
@@ -68,9 +66,9 @@ void Image::deleteImage()
 //Save new image file
 void Image::saveGrayImg()
 {
-    char fname_gray[100];
+    char fname_gray[100]="gray_";
     strcat(fname_gray,this->fname);
-    stbi_write_jpg(fname_gray, this->gray_width, this->gray_height, this->gray_channels, this->gray_img,100);
+    stbi_write_jpg(fname_gray, this->width, this->height, this->gray_channels, this->gray_img,100);
 
     cout<<"Computed image saved successfully\n";
 }
@@ -118,12 +116,15 @@ void Image::printGrayImgSize(){
 void Image::printImgMatrix()
 {
     int k = 0;
-    for (int i = 0; i < this->height; i++)
+    for (int i = 0; i < 1; i++)
     {
         for (int j = 0; j < this->width; j++)
         {
-            cout << "y=" << i << ", x=" << j << ", image_value= " << (void *)this->img[k] << "\n";
-            k++;
+            for(int m=0;m<3;m++)
+            {
+                cout << "y=" << i << ", x=" << j << ", image_value= " << (void *)this->img[k] << "\n";
+                k++;
+            }
         }
     }
 }
