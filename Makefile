@@ -1,17 +1,27 @@
-CXX = g++
-CXXFLAGS = -Wall  -Wextra -pedantic -std=c++17 -g -Iinc/
-LDFLAGS =  -fsanitize=address
 
-SRC = $(wildcard src/*.cpp)
-OBJ = $(patsubst src/%.cpp,build/%.o,$(SRC))
-EXEC = main
+BIN := main
+SRC := $(wildcard src/*.cpp)
+OBJ := $(patsubst src/%.cpp,build/%.o,$(SRC))
 
-all: $(EXEC)
+CFLAGS += -Wall		# afficher tous les warnings
+CFLAGS += -Iinc/ 	# headers .h dans inc/
 
-$(EXEC): $(OBJ)
-	$(CXX) -o $@ $(OBJ) $(LBLIBS)
+LDFLAGS := -lm 
+
+CC := arm-linux-gnueabi-g++
+LD := arm-linux-gnueabi-g++
+
+$(BIN): $(OBJ)
+	$(LD) -o $@ $^ $(LDFLAGS)
 
 build/%.o: src/%.cpp
-	$(CC) $(CXXFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
+
 clean:
-	rm -rf $(OBJ) $(EXEC)
+	# clean compilation outputs
+	rm -f $(OBJ) $(BIN) $(LOG)
+	# clean the output of previous executions
+	rm -f ./*.pgm 
+	rm -f ./*.ppm
+
+.PHONY: clean test

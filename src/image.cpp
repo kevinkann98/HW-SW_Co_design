@@ -7,6 +7,7 @@
 #include <string>
 #include <cstring>
 #include <time.h>
+#include "dma.hpp"
 #include "image.hpp"
 #define STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -14,7 +15,6 @@
 #include "stb_image/stb_image_resize.h"
 #include "stb_image/stb_image_write.h"
 
-using namespace std;
 
 Image::Image(char *fname)
 {
@@ -71,22 +71,22 @@ void Image::saveGrayImg()
     strcat(fname_gray,this->fname);
     stbi_write_jpg(fname_gray, this->width, this->height, this->gray_channels, this->gray_img,100);
 
-    cout<<"Computed image saved successfully\n";
+    std::cout<<"Computed image saved successfully\n";
 }
 
 void Image::printImgWidth()
 {
-    cout << "Image width is: " << this->width << "\n";
+    std::cout << "Image width is: " << this->width << "\n";
 }
 
 void Image::printImgHeight()
 {
-    cout << "Image height is: " << this->height << "\n";
+    std::cout << "Image height is: " << this->height << "\n";
 }
 
 void Image::printImgSize()
 {
-    cout << "Image size is: " << this->img_size << "\n";
+    std::cout << "Image size is: " << this->img_size << "\n";
 }
 
 void Image::printImgGray()
@@ -96,7 +96,7 @@ void Image::printImgGray()
     {
         for (int j = 0; j < this->width; j++)
         {
-            cout << "y=" << i << ", x=" << j << ", image_value= " << (void *)this->gray_img[k] << "\n";
+            std::cout << "y=" << i << ", x=" << j << ", image_value= " << (void *)this->gray_img[k] << "\n";
             k++;
         }
     }
@@ -104,7 +104,7 @@ void Image::printImgGray()
 
 
 void Image::printGrayImgSize(){
-     cout << "Gray image size is: " << this->gray_img_size << "\n";
+     std::cout << "Gray image size is: " << this->gray_img_size << "\n";
 }
 
 void Image::printImgMatrix()
@@ -116,7 +116,7 @@ void Image::printImgMatrix()
         {
             for(int m=0;m<3;m++)
             {
-                cout << "y=" << i << ", x=" << j << ", image_value= " << (void *)this->img[k] << "\n";
+                std::cout << "y=" << i << ", x=" << j << ", image_value= " << (void *)this->img[k] << "\n";
                 k++;
             }
         }
@@ -141,6 +141,14 @@ char *Image::getFileName()
 size_t Image::getImgSize()
 {
     return this->img_size;
+}
+
+unsigned char *Image::getImg(){
+    return this->img;
+}
+
+int Image::getChannels(){
+    return this->channels;
 }
 
 size_t Image::getGrayImgSize()
