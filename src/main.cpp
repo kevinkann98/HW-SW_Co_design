@@ -29,6 +29,11 @@ int main(){
     //Write the matrix of input image (char *) in the memory at source address from which
     //DMA will read
     inputImg = img.getImg();
+    dma->writeSourceInteger(img.getWidth());
+    dma->writeSourceInteger(img.getHeight());
+    dma->writeSourceInteger(img.getChannels());
+    dma->writeSourceInteger(img.getGrayChannels());
+
     for(int i=0;i<img.getImgSize();i++){
        dma->writeSourceByte(inputImg[i]);
     }
@@ -68,9 +73,11 @@ int main(){
     img.printImgSize();
     //img.printImgMatrix();
 
-    img.computeGrayScale();
+    //img.computeGrayScale();
     img.printGrayImgSize();
     //img.printImgGray();
+
+    dma->hexdumpDestination(img.getImgSize());
 
     img.saveGrayImg();
 

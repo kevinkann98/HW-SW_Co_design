@@ -151,6 +151,10 @@ int Image::getChannels(){
     return this->channels;
 }
 
+int Image::getGrayChannels(){
+    return this->gray_channels;
+}
+
 size_t Image::getGrayImgSize()
 {
     return this->gray_img_size;
