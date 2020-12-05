@@ -18,13 +18,21 @@ int main(){
     bool enable_complete = true;
     bool enable_error = false;
     unsigned char threshold = '0';
-    unsigned char *inputImg;
-
     Image img("airplane.jpg");
+    unsigned char *inputImg;
+    unsigned char *outputImg = img.getGrayImg();
+
+    unsigned int source_address = 0x0f000000;
+    unsigned int destination_address = 0x0e000000;
+
+    img.printImgHeight();
+    img.printImgWidth();
+    img.printImgSize();
 
     //Stop the DMA (it starts running once on power)
     dma->reset();
     dma->halt();
+    cout<<"DMA reset OK\n";
 
     //Write the matrix of input image (char *) in the memory at source address from which
     //DMA will read
@@ -34,25 +42,34 @@ int main(){
     dma->writeSourceInteger(img.getChannels());
     dma->writeSourceInteger(img.getGrayChannels());
 
-    for(int i=0;i<img.getImgSize();i++){
-       dma->writeSourceByte(inputImg[i]);
+    //dma->writeSourceString((const char *)inputImg);
+    for(long i=0;i<img.getImgSize();i++){
+        dma->writeSourceByte(inputImg[i]);
     }
+    cout<<"Sending data to DMA OK\n";
 
     //Generate interrupt
-    dma->setInterrupt(true, false, threshold);
+    cout<<"Setting interrupt\n";
+    dma->setInterrupt(enable_complete, enable_error, threshold);
 
     //It will run when, in the DMA register, the value of the
     //number of byte to read at the specified address is different from 0.
     dma->ready();
+    cout<<"DMA ready\n";
 
     //Destination address in which DMA will write back data in RAM
-    dma->setDestinationAddress(0x0f000000);
+    dma->setDestinationAddress(source_address);
+    cout<<"Destination address set OK\n";
 
     //Source address in which DMA will read data in RAM
-    dma->setSourceAddress(0x0e000000);
+    dma->setSourceAddress(destination_address);
+    cout<<"Source address set OK\n";
 
-    dma->setDestinationLength(img.getImgSize()); //HW accelerator sends back input+0xFF
-    dma->setSourceLength(img.getImgSize());    //Input message is 10 int (4bytes*10=40)
+    dma->setDestinationLength(img.getGrayImgSize());
+    cout<<"Destination length set OK"<<img.getGrayImgSize()<<"\n";
+
+    dma->setSourceLength(img.getImgSize());  
+    cout<<"Source length set OK"<<img.getImgSize()<<"\n";  
 
 
     printf("Waiting for MM2S...\n");
@@ -67,19 +84,20 @@ int main(){
         dma->dumpStatus(status);
     } while((!(status & 1<<12) || !(status & 1 << 1)));
 
-
-    img.printImgHeight();
-    img.printImgWidth();
-    img.printImgSize();
-    //img.printImgMatrix();
-
     //img.computeGrayScale();
     img.printGrayImgSize();
     //img.printImgGray();
 
-    dma->hexdumpDestination(img.getImgSize());
+    //Get back the gray_image matrix sent by HW accelerator
+    outputImg = (unsigned char *)destination_address;
+    img.setGrayImg(outputImg);
+    cout<<"Getting output image back from DRAM OK\n";
+
+    //dma->hexdumpDestination(img.getImgSize());
 
     img.saveGrayImg();
+    img.freeImg();
+    cout<<"Image saved successfully\n";
 
 
     return 0;

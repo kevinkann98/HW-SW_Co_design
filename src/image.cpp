@@ -57,11 +57,11 @@ void Image::computeGrayScale()
     }
 }
 
-void Image::deleteImage()
+void Image::freeImg()
 {
-    free(this);
     stbi_image_free(this->img);
     stbi_image_free(this->gray_img);
+    free(this);
 }
 
 //Save new image file
@@ -173,4 +173,12 @@ void Image::setHeight(int height)
 void Image::setFileName(char *fname)
 {
     this->fname = fname;
+}
+
+void Image::setGrayImg(unsigned char *gray_img){
+    this->gray_img = gray_img;
+}
+
+unsigned char *Image::getGrayImg(){
+    return this->gray_img;
 }

@@ -53,6 +53,7 @@ using namespace std;
     void setWidth(int width);
     void setHeight(int height);
     void setFileName(char *fname);
+    void setGrayImg(unsigned char *gray_img);
 
     void printImgMatrix();
     void printImgWidth();
@@ -60,6 +61,7 @@ using namespace std;
     void printImgSize();
     void printImgGray();
     void saveGrayImg();
+    void freeImg();
 
     void printGrayImgSize();
 
