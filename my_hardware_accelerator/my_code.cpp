@@ -1,6 +1,6 @@
 #include "ap_axi_sdata.h"
 #define IN_SIZE 20000000
-#definfe OUT_SIZE 15000000
+#define OUT_SIZE 15000000
 //1)This code written in C/C++ will generate the HW accelerator
 //2)It will be translated into VHDL by Vivado HLS (High Level Synthesis of C/C++)
 //3)Once the VHDL generated, integrate it to the block design (bitstream)
@@ -14,7 +14,7 @@ typedef struct ap_axi{
 }ap_axi;
 
 //Accelerator computes the grayscale of RGB input image
-void hardware_accelerator(ap_axi IN[20000000], ap_axi OUT[15000000]){
+void hardware_accelerator(ap_axi IN[IN_SIZE], ap_axi OUT[OUT_SIZE]){
     //Define RTL interface
     //Define AXI-stream bus
     #pragma HLS INTERFACE AXIS port = IN
@@ -38,9 +38,9 @@ void hardware_accelerator(ap_axi IN[20000000], ap_axi OUT[15000000]){
     {
         for (int x = 0; x < width; x++)
         {
-            OUT[k].data = (IN[j].data + IN[j + 1].data + IN[j + 2].data) / 3.0; //Calculate average of RGB
-            OUT[k].keep = (IN[j].keep + IN[j + 1].keep + IN[j + 2].keep) / 3.0;
-            OUT[k].last = (IN[j].last + IN[j + 1].last + IN[j + 2].last) / 3.0;
+            OUT[k].data = (IN[j].data + IN[j + 1].data + IN[j + 2].data)/3; //Calculate average of RGB
+            OUT[k].keep = (IN[j].keep + IN[j + 1].keep + IN[j + 2].keep)/3;
+            OUT[k].last = (IN[j].last + IN[j + 1].last + IN[j + 2].last)/3;
             k++;
             j+=3;
         }

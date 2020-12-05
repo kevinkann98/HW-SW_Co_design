@@ -18,12 +18,12 @@ int main(){
     bool enable_complete = true;
     bool enable_error = false;
     unsigned char threshold = '0';
-    Image img("airplane.jpg");
+    Image img("senouci.png");
     unsigned char *inputImg;
     unsigned char *outputImg = img.getGrayImg();
 
-    unsigned int source_address = 0x0f000000;
-    unsigned int destination_address = 0x0e000000;
+    unsigned int source_address = 0x0e000000;
+    unsigned int destination_address = 0x0f000000;
 
     img.printImgHeight();
     img.printImgWidth();
@@ -37,15 +37,17 @@ int main(){
     //Write the matrix of input image (char *) in the memory at source address from which
     //DMA will read
     inputImg = img.getImg();
-    dma->writeSourceInteger(img.getWidth());
-    dma->writeSourceInteger(img.getHeight());
-    dma->writeSourceInteger(img.getChannels());
-    dma->writeSourceInteger(img.getGrayChannels());
+    //dma->writeSourceInteger(img.getWidth());
+    //dma->writeSourceInteger(img.getHeight());
+    //dma->writeSourceInteger(img.getChannels());
+    //dma->writeSourceInteger(img.getGrayChannels());
 
-    //dma->writeSourceString((const char *)inputImg);
-    for(long i=0;i<img.getImgSize();i++){
+    for(int i=0;i<img.getImgSize();i++){
+       // dma->writeSourceByte(inputImg[i]);
         dma->writeSourceByte(inputImg[i]);
     }
+
+    //dma->hexdumpSource(img.getImgSize());
     cout<<"Sending data to DMA OK\n";
 
     //Generate interrupt
@@ -53,19 +55,19 @@ int main(){
     dma->setInterrupt(enable_complete, enable_error, threshold);
 
     //It will run when, in the DMA register, the value of the
-    //number of byte to read at the specified address is different from 0.
+    //number of byte to read at img.getImgSize()+16the specified address is different from 0.
     dma->ready();
     cout<<"DMA ready\n";
 
     //Destination address in which DMA will write back data in RAM
-    dma->setDestinationAddress(source_address);
+    dma->setDestinationAddress(destination_address);
     cout<<"Destination address set OK\n";
 
     //Source address in which DMA will read data in RAM
-    dma->setSourceAddress(destination_address);
+    dma->setSourceAddress(source_address);
     cout<<"Source address set OK\n";
 
-    dma->setDestinationLength(img.getGrayImgSize());
+    dma->setDestinationLength(img.getGrayImgSize()); //Destination length in byte
     cout<<"Destination length set OK"<<img.getGrayImgSize()<<"\n";
 
     dma->setSourceLength(img.getImgSize());  
@@ -93,12 +95,11 @@ int main(){
     img.setGrayImg(outputImg);
     cout<<"Getting output image back from DRAM OK\n";
 
-    //dma->hexdumpDestination(img.getImgSize());
+    //dma->hexdumpDestination(500);
 
     img.saveGrayImg();
     img.freeImg();
     cout<<"Image saved successfully\n";
-
 
     return 0;
 }
