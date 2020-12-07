@@ -23,6 +23,7 @@ Image::Image(char *fname)
     strcpy(file_name, "img/");
     strcat(file_name, this->fname);
     this->img = stbi_load(file_name, &this->width, &this->height, &this->channels, 3); //Load the image
+
     if (img == NULL)
     {
         cout << "Error loading image\n";

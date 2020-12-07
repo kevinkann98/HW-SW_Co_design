@@ -18,7 +18,7 @@ int main(){
     bool enable_complete = true;
     bool enable_error = false;
     unsigned char threshold = '0';
-    Image img("senouci.png");
+    Image img("senouci.jpg");
     unsigned char *inputImg;
     unsigned char *outputImg = img.getGrayImg();
 
@@ -37,14 +37,13 @@ int main(){
     //Write the matrix of input image (char *) in the memory at source address from which
     //DMA will read
     inputImg = img.getImg();
-    //dma->writeSourceInteger(img.getWidth());
-    //dma->writeSourceInteger(img.getHeight());
-    //dma->writeSourceInteger(img.getChannels());
-    //dma->writeSourceInteger(img.getGrayChannels());
+    dma->writeSourceInteger(img.getWidth());
+    dma->writeSourceInteger(img.getHeight());
+
 
     for(int i=0;i<img.getImgSize();i++){
-       // dma->writeSourceByte(inputImg[i]);
-        dma->writeSourceByte(inputImg[i]);
+        dma->writeSourceByte(inputImg[i]); //Attention: ne peut envoyer plus de 171 032 bytes
+        //cout<<i<<" "<<(void *)inputImg[i]<<"\n";
     }
 
     //dma->hexdumpSource(img.getImgSize());
@@ -55,7 +54,6 @@ int main(){
     dma->setInterrupt(enable_complete, enable_error, threshold);
 
     //It will run when, in the DMA register, the value of the
-    //number of byte to read at img.getImgSize()+16the specified address is different from 0.
     dma->ready();
     cout<<"DMA ready\n";
 
@@ -67,7 +65,7 @@ int main(){
     dma->setSourceAddress(source_address);
     cout<<"Source address set OK\n";
 
-    dma->setDestinationLength(img.getGrayImgSize()); //Destination length in byte
+    dma->setDestinationLength(img.getGrayImgSize()); //Destination length in byte: Can't be greater than 2^17 bits (Data buffer length register)
     cout<<"Destination length set OK"<<img.getGrayImgSize()<<"\n";
 
     dma->setSourceLength(img.getImgSize());  
@@ -95,10 +93,11 @@ int main(){
     img.setGrayImg(outputImg);
     cout<<"Getting output image back from DRAM OK\n";
 
-    //dma->hexdumpDestination(500);
 
-    img.saveGrayImg();
-    img.freeImg();
+    //dma->hexdumpDestination(10);
+
+    //img.saveGrayImg();
+    //img.freeImg();
     cout<<"Image saved successfully\n";
 
     return 0;
