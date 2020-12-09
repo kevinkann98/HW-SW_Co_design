@@ -155,6 +155,10 @@ class DirectMemoryAccess {
             return i;
         }
 
+        unsigned long *getdst_addr(){
+            return this->dst_addr;
+        }
+
         void resetCursor() {
             this->offset = 0;
         }

@@ -51,17 +51,17 @@ void Image::computeGrayScale()
     {
         for (int x = 0; x < this->width; x++)
         {
-            this->gray_img[k] = (this->img[j] + this->img[j + 1] + this->img[j + 2]) / 3.0; //Calculate average of RGB
+            for(int i = 0;i<this->getGrayChannels();i++){
+            this->gray_img[k] = (this->img[j] + this->img[j+1] + this->img[j+2])/3; //Calculate average of RGB
             k++;
-            j+=3;
+            j++;
+            }
         }
     }
 }
 
 void Image::freeImg()
 {
-    stbi_image_free(this->img);
-    stbi_image_free(this->gray_img);
     free(this);
 }
 
@@ -71,7 +71,6 @@ void Image::saveGrayImg()
     char fname_gray[100]="gray_";
     strcat(fname_gray,this->fname);
     stbi_write_jpg(fname_gray, this->width, this->height, this->gray_channels, this->gray_img,100);
-
     std::cout<<"Computed image saved successfully\n";
 }
 
@@ -111,14 +110,13 @@ void Image::printGrayImgSize(){
 void Image::printImgMatrix()
 {
     int k = 0;
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < this->height; i++)
     {
         for (int j = 0; j < this->width; j++)
         {
-            for(int m=0;m<3;m++)
-            {
-                std::cout << "y=" << i << ", x=" << j << ", image_value= " << (void *)this->img[k] << "\n";
-                k++;
+            for(int m=0;m<this->channels;m++){
+            std::cout << "y=" << i << ", x=" << j << ", image_value= " << (void *)this->img[k] << "\n";
+            k++;
             }
         }
     }

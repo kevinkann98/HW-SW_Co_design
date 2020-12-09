@@ -32,15 +32,25 @@ using namespace std;
     //Methods
 
     public:
-    //Construct an image object 
+    /**
+     * @brief Class constructor
+     * @param  fname The file name
+     */
     Image(char *fname);
+
+    /**
+     * @brief Function that computes RGB image into grayscale image: only use in PS mode
+     */ 
     void computeGrayScale();
+
+    /**
+     * @brief Delete an image
+     */ 
     void deleteImage(); 
 
-    //void image_setPixel(int x, int y, uint8_t pixel_value<); /*!< pixel setter method*/
-    //color_t image_getPixel(int x, int y);   /*!< pixel getter method*/
-    //void image_inputMatrix(); //Get the pixel values of entire image, place in the pixel_table
-
+    /**
+     * @brief All getters and setters
+     * */
     int getWidth();
     int getHeight();
     int getChannels();
@@ -55,14 +65,40 @@ using namespace std;
     void setFileName(char *fname);
     void setGrayImg(unsigned char *gray_img);
 
+    /**
+     * @brief Display the input RGB image matrix 
+     * */
     void printImgMatrix();
+
+    /**
+     * @brief Display the input image width
+     * */
     void printImgWidth();
+
+    /**
+     * @brief Display the input image height
+     * */
     void printImgHeight();
+
+    /**
+     * @brief Display the input image size (width*height*channels)
+     * */
     void printImgSize();
+
+    /**
+     * @brief Display the output grayscale image
+     * */
     void printImgGray();
+
+    /**
+     * @brief Save the output grayscale image in a displayable JPG format
+     * */
     void saveGrayImg();
     void freeImg();
 
+    /**
+     * @brief Display the output image size
+     * */
     void printGrayImgSize();
 
 };
