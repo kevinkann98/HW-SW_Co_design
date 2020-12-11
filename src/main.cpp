@@ -43,28 +43,29 @@ int main()
     while (img_index < img.getImgSize())
     {
         //Stop the DMA (it starts running once on power)
-    /*dma->reset();
+    dma->reset();
     dma->halt();
-    cout << "DMA reset OK\n";*/
+    cout << "DMA reset OK\n";
+    dma->resetCursor();
 
         cout<<"Sending from Img_index "<<index_temp;
         for (img_index = index_temp; img_index < i*max_throughput; img_index++)
         {
-            if(img_index > img.getGrayImgSize())
+            if(img_index > img.getImgSize())
             break;
-            //dma->writeSourceByte(inputImg[img_index]); //Attention: Plante après 171 032 bytes MAIS 4kb max du coôté de l'accélérateur..Small throughput
+            dma->writeSourceByte(inputImg[img_index]); //Attention: Plante après 171 032 bytes MAIS 4kb max du coôté de l'accélérateur..Small throughput
         }
         cout<<"to index"<<img_index<<"\n";
 
 
 
-        //cout << "Sending data to DMA OK\n";
+        cout << "Sending data to DMA OK\n";
 
         //img.printImgMatrix();
         //dma->hexdumpSource(img.getImgSize());
 
         //Generate interrupt
-        /*cout << "Setting interrupt\n";
+        cout << "Setting interrupt\n";
         dma->setInterrupt(enable_complete, enable_error, threshold);
 
         //It will run when, in the DMA register, the value of the
@@ -76,7 +77,7 @@ int main()
         cout << "Destination address set OK\n";
 
         //Source address in which DMA source_addressswill read data in RAM
-        dma->setSourceAddress(source_address + (i - 1)*max_throughput);
+        dma->setSourceAddress(source_address);
         cout << "Source address set OK\n";
 
         dma->setDestinationLength(img.getGrayImgSize()); //Destination length in byte: Can't be greater than 2^17 bits (Data buffer length register)
@@ -102,14 +103,14 @@ int main()
         unsigned long *dst_addr = dma->getdst_addr();
         //Get back the gray_image matrix sent by HW accelerator
         buffer = (unsigned char *)dst_addr;
-        int k = 0;*/
+        int k = 0;
 
         cout<<" Writing from index "<<grayimg_temp;
         for(grayimg_index = grayimg_temp; grayimg_index < i*min_throughput;grayimg_index++){
             if(grayimg_index > img.getGrayImgSize())
             break;
-            //outputImg[grayimg_index] = buffer[k];
-            //k++;
+            outputImg[grayimg_index] = buffer[k];
+            k++;
         }
         cout<<"to index "<<grayimg_index<<"\n";
         
@@ -120,16 +121,16 @@ int main()
         index_temp = i*max_throughput + 1;
         //cout<<" index_temp"<< index_temp<<"\n";
         i++;
-       // cout << "Getting output image back from DRAM OK\n";
+        cout << "Getting output image back from DRAM OK\n";
     }
 
-       /* img.setGrayImg(outputImg);
+        img.setGrayImg(outputImg);
         cout << "Set gray image OK\n";
 
         //img.computeGrayScale();
         img.printImgGray();
         img.printGrayImgSize();
-        img.saveGrayImg();*/
+        img.saveGrayImg();
 
         return 0;
     }
