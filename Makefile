@@ -8,8 +8,8 @@ CFLAGS += -Iinc/ 	# headers .h dans inc/
 
 LDFLAGS := -lm 
 
-CC :=arm-linux-gnueabi-g++
-LD :=arm-linux-gnueabi-g++
+CC :=g++
+LD :=g++
 
 $(BIN): $(OBJ)
 	$(LD) -o $@ $^ $(LDFLAGS)

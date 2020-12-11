@@ -25,9 +25,9 @@ int main()
     unsigned char *inputImg = img.getImg();
     unsigned char *buffer;
     unsigned char *outputImg = (unsigned char *)malloc(img.getGrayImgSize()*sizeof(unsigned char));
-    int img_index;
+    int img_index = 0;
     int index_temp = 0;
-    int grayimg_index;
+    int grayimg_index = 0;
     int grayimg_temp = 0;
 
     int max_throughput = 36 * 36 * img.getChannels(); //Max throughput to send data
@@ -37,33 +37,34 @@ int main()
     img.printImgWidth();
     img.printImgSize();
 
-    //Stop the DMA (it starts running once on power)
-    dma->reset();
-    dma->halt();
-    cout << "DMA reset OK\n";
-
     //Write the matrix of input image (char *) in the memory at source address from which
     //DMA will read
     int i = 1;
-    while (index_temp < img.getImgSize())
+    while (img_index < img.getImgSize())
     {
+        //Stop the DMA (it starts running once on power)
+    /*dma->reset();
+    dma->halt();
+    cout << "DMA reset OK\n";*/
+
+        cout<<"Sending from Img_index "<<index_temp;
         for (img_index = index_temp; img_index < i*max_throughput; img_index++)
         {
-            if(img_index > img.getImgSize())
+            if(img_index > img.getGrayImgSize())
             break;
-            dma->writeSourceByte(inputImg[img_index]); //Attention: Plante après 171 032 bytes MAIS 4kb max du coôté de l'accélérateur..Small throughput
+            //dma->writeSourceByte(inputImg[img_index]); //Attention: Plante après 171 032 bytes MAIS 4kb max du coôté de l'accélérateur..Small throughput
         }
-        cout<<"Img_index = "<<img_index;
+        cout<<"to index"<<img_index<<"\n";
 
 
 
-        cout << "Sending data to DMA OK\n";
+        //cout << "Sending data to DMA OK\n";
 
-        img.printImgMatrix();
-        dma->hexdumpSource(img.getImgSize());
+        //img.printImgMatrix();
+        //dma->hexdumpSource(img.getImgSize());
 
         //Generate interrupt
-        cout << "Setting interrupt\n";
+        /*cout << "Setting interrupt\n";
         dma->setInterrupt(enable_complete, enable_error, threshold);
 
         //It will run when, in the DMA register, the value of the
@@ -75,7 +76,7 @@ int main()
         cout << "Destination address set OK\n";
 
         //Source address in which DMA source_addressswill read data in RAM
-        dma->setSourceAddress(source_address);
+        dma->setSourceAddress(source_address + (i - 1)*max_throughput);
         cout << "Source address set OK\n";
 
         dma->setDestinationLength(img.getGrayImgSize()); //Destination length in byte: Can't be greater than 2^17 bits (Data buffer length register)
@@ -101,30 +102,34 @@ int main()
         unsigned long *dst_addr = dma->getdst_addr();
         //Get back the gray_image matrix sent by HW accelerator
         buffer = (unsigned char *)dst_addr;
-        int k = 0;
+        int k = 0;*/
+
+        cout<<" Writing from index "<<grayimg_temp;
         for(grayimg_index = grayimg_temp; grayimg_index < i*min_throughput;grayimg_index++){
-            outputImg[grayimg_index] = buffer[k];
-            k++;
+            if(grayimg_index > img.getGrayImgSize())
+            break;
+            //outputImg[grayimg_index] = buffer[k];
+            //k++;
         }
-        cout<<" grayimg_index"<< grayimg_index;
-        grayimg_temp = grayimg_index*i+1;
-        cout<<" grayimg_temp"<< grayimg_temp;
+        cout<<"to index "<<grayimg_index<<"\n";
+        
+        grayimg_temp = i*min_throughput + 1;
 
-        index_temp = img_index*i + 1;
-        cout<<" index_temp"<< index_temp<<"\n";
+        //cout<<" grayimg_temp"<<grayimg_temp<<"\n";
+
+        index_temp = i*max_throughput + 1;
+        //cout<<" index_temp"<< index_temp<<"\n";
         i++;
-        cout << "Getting output image back from DRAM OK\n";
-
-        img.printImgGray();
-        dma->hexdumpDestination(img.getGrayImgSize());
+       // cout << "Getting output image back from DRAM OK\n";
     }
 
-        img.setGrayImg(outputImg);
+       /* img.setGrayImg(outputImg);
         cout << "Set gray image OK\n";
 
         //img.computeGrayScale();
+        img.printImgGray();
         img.printGrayImgSize();
-        img.saveGrayImg();
+        img.saveGrayImg();*/
 
         return 0;
     }
