@@ -11,15 +11,27 @@
 #define DST_ADDR 0x0f000000
 #define DMA_ADDR 0x40400000
 
-void dma_configure(DirectMemoryAccess *dma, Image img)
+//using namespace std;
+int main()
 {
-    unsigned char *inputImg = img.getImg();
+
+    //Init the DMA
+    unsigned long int status;
+    DirectMemoryAccess *dma = new DirectMemoryAccess(DMA_ADDR, SRC_ADDR, DST_ADDR);
 
     bool enable_complete = true;
     bool enable_error = false;
     unsigned char threshold = '0';
 
-    //Stop the DMA (it starts running once on power)
+    Image img("senouci.jpg");
+    unsigned char *inputImg = img.getImg();
+    unsigned char *outputImg = (unsigned char *)malloc(img.getGrayImgSize() * sizeof(unsigned char));
+
+    img.printImgHeight();
+    img.printImgWidth();
+    img.printImgSize();
+
+     //Stop the DMA (it starts running once on power)
     dma->reset();
     dma->halt();
     cout << "DMA reset OK\n";
@@ -57,23 +69,7 @@ void dma_configure(DirectMemoryAccess *dma, Image img)
 
     dma->setSourceLength(img.getImgSize());
     cout << "Source length set OK" << img.getImgSize() << "\n";
-}
-//using namespace std;
-int main()
-{
-
-    //Init the DMA
-    unsigned long int status;
-    DirectMemoryAccess *dma = new DirectMemoryAccess(DMA_ADDR, SRC_ADDR, DST_ADDR);
-
-    Image img("senouci.jpg");
-    unsigned char *outputImg = (unsigned char *)malloc(img.getGrayImgSize() * sizeof(unsigned char));
-
-    img.printImgHeight();
-    img.printImgWidth();
-    img.printImgSize();
-
-    dma_configure(dma, img);
+    
     printf("Waiting for MM2S...\n");
     do
     {
@@ -99,7 +95,7 @@ int main()
     cout << "Set gray image OK\n";
 
     //img.computeGrayScale();
-    img.printImgGray();
+    //img.printImgGray();
     img.printGrayImgSize();
     img.saveGrayImg();
 
