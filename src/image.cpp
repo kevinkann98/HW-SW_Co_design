@@ -15,7 +15,6 @@
 #include "stb_image/stb_image_resize.h"
 #include "stb_image/stb_image_write.h"
 
-
 Image::Image(char *fname)
 {
     this->fname = fname;
@@ -51,7 +50,7 @@ void Image::computeGrayScale()
     {
         for (int x = 0; x < this->width; x++)
         {
-            for(int i = 0;i<this->getGrayChannels();i++){
+            for(int i = 0;i<this->gray_channels;i++){
             this->gray_img[k] = (this->img[j] + this->img[j+1] + this->img[j+2])/3; //Calculate average of RGB
             k++;
             j++;

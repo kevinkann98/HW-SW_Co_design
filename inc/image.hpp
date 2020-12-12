@@ -10,7 +10,7 @@
 
 
 /** 
- * @brief Image ; this class holds an image data 
+ * @brief Image ; this class holds an image data and its computed image
  */
 
 using namespace std;
@@ -30,7 +30,6 @@ using namespace std;
     unsigned char *gray_img; //Output image in gray 
 
     //Methods
-
     public:
     /**
      * @brief Class constructor
