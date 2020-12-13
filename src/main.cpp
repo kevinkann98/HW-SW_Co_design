@@ -7,17 +7,15 @@
 #include <iostream>
 #include "dma.hpp"
 #include "image.hpp"
-#define SRC_ADDR 0x0e000000
-#define DST_ADDR 0x0f000000
-#define DMA_ADDR 0x40400000
 
 //using namespace std;
 int main()
 {
-
     //Init the DMA
     unsigned long int status;
-    DirectMemoryAccess *dma = new DirectMemoryAccess(DMA_ADDR, SRC_ADDR, DST_ADDR);
+    unsigned int source_address = 0x0e000000;
+    unsigned int destination_address = 0x0f000000;
+    DirectMemoryAccess* dma = new DirectMemoryAccess(0x40400000, source_address, destination_address);
 
     bool enable_complete = true;
     bool enable_error = false;
@@ -25,7 +23,7 @@ int main()
 
     Image img("senouci.jpg");
     unsigned char *inputImg = img.getImg();
-    unsigned char *outputImg = (unsigned char *)malloc(img.getGrayImgSize() * sizeof(unsigned char));
+    unsigned char *outputImg;
 
     img.printImgHeight();
     img.printImgWidth();
@@ -57,11 +55,11 @@ int main()
     cout << "DMA ready\n";
 
     //Destination address in which DMA will write back data in RAM
-    dma->setDestinationAddress(DST_ADDR);
+    dma->setDestinationAddress(destination_address);
     cout << "Destination address set OK\n";
 
     //Source address in which DMA source_addressswill read data in RAM
-    dma->setSourceAddress(SRC_ADDR);
+    dma->setSourceAddress(source_address);
     cout << "Source address set OK\n";
 
     dma->setDestinationLength(img.getGrayImgSize()); //Destination length in byte: Can't be greater than 2^17 bits (Data buffer length register)
